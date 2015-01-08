@@ -16,23 +16,44 @@ function δ(method) {
 	return σ.wrapCallback(db[method].bind(db));
 }
 
+var redirectToDoc = σ.flatMap(function(doc) {
+	return ρ.found('/' + doc._id, '');
+});
+
+var docsList = σ.map(function(docs) {
+	return docs.map(function(doc) {
+		return '<div>' + doc.updated + ': ' + '<a href="/' + doc._id + '">' + doc._id + '</a></div>';
+	});
+});
+
+var toHtml = σ.flatMap(ρ.html);
+
 var server = http.createServer(handle(λ.route([
 	λ.get('/', function() {
-		return δ('find')({}).map(function(docs) {
-			return docs.map(function(doc) {
-				return '<div>' + doc.created + ': ' + '<a href="/' + doc._id + '">' + doc._id + '</a></div>';
-			});
-		}).flatMap(ρ.html);
+		return δ('find')({})
+			.through(docsList)
+			.through(toHtml);
 	}),
 
 	λ.post('/', function(req) {
 		return corps.raw(req).flatMap(function(src) {
 			return δ('insert')({
 				src: src.toString('utf8'),
-				created: new Date()
+				updated: new Date()
+			});
+		}).through(redirectToDoc);
+	}),
+
+	λ.put('/:id', function(req) {
+		return corps.raw(req).flatMap(function(src) {
+			return δ('update')({
+				_id: req.params.id
+			}, {
+				src: src.toString('utf8'),
+				updated: new Date()
 			});
 		}).flatMap(function(doc) {
-			return ρ.found('/' + doc._id, '');
+			return ρ.found('/' + req.params.id, '');
 		});
 	}),
 
