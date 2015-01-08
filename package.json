@@ -4,7 +4,7 @@
   "description": "A browserify playground",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,14 @@
   "homepage": "https://github.com/quarterto/Browserifun",
   "dependencies": {
     "browserify": "^8.0.3",
+    "corps": "0.0.0",
     "dram": "^0.3.1",
+    "highland": "^2.3.0",
     "livewire": "^0.6.0",
+    "nedb": "^1.1.1",
     "oban": "^0.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.2.1"
   }
 }
