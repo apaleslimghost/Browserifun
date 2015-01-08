@@ -20,14 +20,17 @@ var server = http.createServer(handle(λ.route([
 	λ.get('/', function() {
 		return δ('find')({}).map(function(docs) {
 			return docs.map(function(doc) {
-				return '<a href="/' + doc._id + '">' + doc._id + '</a>';
+				return '<div>' + doc.created + ': ' + '<a href="/' + doc._id + '">' + doc._id + '</a></div>';
 			});
 		}).flatMap(ρ.html);
 	}),
 
 	λ.post('/', function(req) {
 		return corps.raw(req).flatMap(function(src) {
-			return δ('insert')({src: src.toString('utf8')});
+			return δ('insert')({
+				src: src.toString('utf8'),
+				created: new Date()
+			});
 		}).flatMap(function(doc) {
 			return ρ.found('/' + doc._id, '');
 		});
