@@ -1,0 +1,25 @@
+{
+  "name": "Browserifun",
+  "version": "1.0.0",
+  "description": "A browserify playground",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quarterto/Browserifun.git"
+  },
+  "author": "Matt Brennan <matt@153.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quarterto/Browserifun/issues"
+  },
+  "homepage": "https://github.com/quarterto/Browserifun",
+  "dependencies": {
+    "browserify": "^8.0.3",
+    "dram": "^0.3.1",
+    "livewire": "^0.6.0",
+    "oban": "^0.2.0"
+  }
+}
