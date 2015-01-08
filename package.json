@@ -1,5 +1,5 @@
 {
-  "name": "Browserifun",
+  "name": "browserifun",
   "version": "1.0.0",
   "description": "A browserify playground",
   "main": "index.js",

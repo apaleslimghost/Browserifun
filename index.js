@@ -18,7 +18,11 @@ function δ(method) {
 
 var server = http.createServer(handle(λ.route([
 	λ.get('/', function() {
-		return δ('find')({}).flatMap(ρ.json);
+		return δ('find')({}).map(function(docs) {
+			return docs.map(function(doc) {
+				return '<a href="/' + doc._id + '">' + doc._id + '</a>';
+			});
+		}).flatMap(ρ.html);
 	}),
 
 	λ.post('/', function(req) {
