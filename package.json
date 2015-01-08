@@ -19,10 +19,12 @@
   "dependencies": {
     "browserify": "^8.0.3",
     "corps": "0.0.0",
+    "detective": "^4.0.0",
     "dram": "^0.3.1",
     "highland": "^2.3.0",
     "livewire": "^0.6.0",
     "nedb": "^1.1.1",
+    "npm": "^2.1.17",
     "oban": "^0.2.0"
   },
   "devDependencies": {

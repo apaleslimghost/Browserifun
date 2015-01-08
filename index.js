@@ -6,6 +6,11 @@ var Nedb = require('nedb');
 var σ = require('highland');
 var corps = require('corps');
 var browserify = require('browserify');
+var n = require('npm');
+var npm = n.commands;
+var detective = require('detective');
+
+n.load({});
 
 var db = new Nedb({
 	filename: 'browserifun.db',
@@ -58,11 +63,19 @@ var server = http.createServer(handle(λ.route([
 	}),
 
 	λ.get('/:id.js', function(req) {
+		var b = browserify();
+
 		return δ('findOne')({
 			_id: req.params.id
 		}).flatMap(function(doc) {
-			return σ(browserify(σ([doc.src])).bundle());
-		});
+			return σ.wrapCallback(npm.install)(detective(doc.src)).flatMap(function() {
+				return σ([doc.src]);
+			});
+		}).flatMap(function(src) {
+			return σ(browserify(σ([src])).bundle());
+		}).collect().map(function(xs) {
+			return xs.join('');
+		}).flatMap(ρ.type('application/javascript'));
 	}),
 
 	λ.get('/:id', function(req) {
