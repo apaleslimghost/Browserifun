@@ -66,7 +66,7 @@ var server = http.createServer(handle(λ.route([
 	}),
 
 	λ.get('/:id', function(req) {
-		return ρ.html('<script src="/' + req.params.id + '.js"></script>');
+		return ρ.html('<body><script src="/' + req.params.id + '.js"></script></body>');
 	}),
 
 	λ.delete('/:id', function(req) {
